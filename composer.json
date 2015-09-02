@@ -1,0 +1,12 @@
+{
+    "name": "directcall/directcall-fuelphp",
+    "type": "library",
+    "description": "Directcall API - fuelphp",
+    "autoload": {
+        "psr-0": { "DirectCall\\": ["classes/"] }
+    },
+    "require": {
+        "directcall/directcall": "dev-master"
+    }
+}
+
