@@ -29,6 +29,10 @@ class Sms {
         }
     }
 
+    /**
+     *
+     * @return DirectCall\Sms
+     */
     public static function getInstance() {
         if (is_null(self::$instance)) {
             self::$instance = new self();
