@@ -43,8 +43,11 @@ class Sms {
     /**
      *
      */
-    public function sendSMS($fromTel, $toTel, $msg) {
-        return (new Module\SmsModule($this->directcall))->send($fromTel, $toTel, $msg);
+    public function sendSMS($fromNumber = null, $toNumber, $msg) {
+        if (!$fromNumber) {
+            $fromNumber = \Config::get('directcall.credentials.fromNumber');
+        }
+        return (new Module\SmsModule($this->directcall))->send($fromNumber, $toNumber, $msg);
     }
 
     /**
