@@ -17,6 +17,7 @@ class Sms {
 
     private static $instance;
     private $directcall;
+    private $fromNumber;
 
     private function __construct() {
         \Config::load('directcall', true);
@@ -24,6 +25,7 @@ class Sms {
             throw new Exception('credentials must be set in config');
         }
         $this->directcall = new DirectCall(\Config::get('directcall.credentials.clientId'), \Config::get('directcall.credentials.clientSecret'));
+        $this->fromNumber = \Config::get('directcall.credentials.fromNumber');
         if (empty($this->directcall->authenticate())) {
             throw new Exception('credentials must be set in config');
         }
@@ -43,11 +45,11 @@ class Sms {
     /**
      *
      */
-    public function sendSMS($fromNumber = null, $toNumber, $msg) {
-        if (!$fromNumber) {
-            $fromNumber = \Config::get('directcall.credentials.fromNumber');
-        }
-        return (new Module\SmsModule($this->directcall))->send($fromNumber, $toNumber, $msg);
+    public function sendSMS($toNumber, $msg) {
+        return (new Module\SmsModule($this->directcall))->send($this->fromNumber, $toNumber, $msg);
+    }
+    public function callSMS($toNumber, $msg) {
+        return (new Module\SmsModule($this->directcall))->send($this->fromNumber, $toNumber, $msg, 'voz');
     }
 
     /**
